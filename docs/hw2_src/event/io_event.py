@@ -1,6 +1,7 @@
 import pygame
 from consts import *
 from event.base_event import *
+from pygame.locals import *
 
 move_keys = {
     pygame.locals.K_LEFT : ( -1 , 0 ),
@@ -16,14 +17,12 @@ class EventIOEvent( BaseEvent ):
 
     def do_action( self ):
         for e in pygame.event.get():
-            if e.type == pygame.locals.KEYUP:
-                if e.key not in move_keys:
-                    continue
-                self.env[ "dir" ] = move_keys[ e.key ]
-                print( str( self.env[ "dir" ] ) )
-            elif e.type == pygame.locals.QUIT:
+            if e.type == pygame.locals.QUIT:
                 self.env[ "pyQUIT" ] = True
                 self.env[ "gamec" ].add_event( EventEndGame( self.env , self.priority + TICKS_PER_TURN ) )
-
+            # TODO
+            '''
+            Check what key does player press then change the state of the game
+            '''
         self.env[ "uic" ].add_event( EventIOEvent( self.env , self.priority + TICKS_PER_TURN ) )
 

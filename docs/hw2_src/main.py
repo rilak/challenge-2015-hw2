@@ -6,9 +6,10 @@ import pygame
 import controller
 from pygame.locals import *
 from consts import *
-from event.game_event import *
-from event.io_event import *
-from event.ui_event import *
+from event import *
+#from event.game_event import *
+#from event.io_event import *
+#from event.ui_event import *
 
 def main(argv):
     random_seed = '514'
@@ -19,7 +20,7 @@ def main(argv):
     # INIT OF ENV
     pygame.init()
     env = { "gamec" : gamec , "uic" : uic }
-    pygame.display.set_caption( "CuteSnakeeee" )
+    pygame.display.set_caption( "Snakeeee" )
     env[ "screen" ] = pygame.display.set_mode( ( 925 , 540 ) , 0 , 32 )
     env[ "gamec" ].add_event( EventStartGame( env , random_seed , 0 ) )
 

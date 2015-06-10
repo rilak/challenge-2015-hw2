@@ -33,14 +33,10 @@ class EventDrawGround( BaseEvent ):
         self.priority = priority
 
     def do_action( self ):
-        snake_group.empty()
-        food_group.empty()
-
-        for p in self.env[ "snake" ]:
-            snake_group.add( SnakePart( p , IMG_SNAKE_PART ) )
-
-        for p in self.env[ "foods" ]:
-            food_group.add( Food( p , IMG_FOOD ) )
+        # TODO
+        '''
+        What this event do is to arrange objects on the surface
+        '''
 
         self.env[ "uic" ].add_event( EventDrawGround( self.env , self.priority + TICKS_PER_TURN ) )
 
@@ -61,12 +57,9 @@ class EventDrawClear( BaseEvent ):
         self.surf     = env[ "screen" ]
 
     def do_action( self  ):
-        snake_group.clear( self.surf , IMG_BG )
-        food_group.clear( self.surf , IMG_BG )
-
-        snake_group.draw( self.surf )
-        food_group.draw( self.surf )
-
-        pygame.display.update()
+        # TODO
+        '''
+        What this event do is to draw objects on to the surface
+        '''
         self.env[ "uic" ].add_event( EventDrawClear( self.env , self.priority + TICKS_PER_TURN ) )
 
