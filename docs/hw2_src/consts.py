@@ -7,3 +7,4 @@ IMG_FOOD = pygame.image.load( "./food.png" )
 TICKS_PER_TURN = 33
 FPS = 36
 FOOD_ADD_TIME = 1000
+MOVE_RATE = 4
