@@ -113,6 +113,19 @@ class EventStartGame( BaseEvent ):
         '''
         Init some data in env[] when the game starts, and add some events to the controllers
         '''
+        #init snake and food
+        self.env["dir"] = (1, 0)
+        self.env["snake"] = [(100, 100)]
+        self.env["foods"] = [(200, 200)]
+
+        #init gamc
+        self.env["gamec"].add_event(EventCheckSnake(self.env, 1) )
+        self.env["gamec"].add_event(EventAddFood(self.env, 2) )
+
+        #init uic
+        self.env["uic"].add_event( EventDrawInit(self.env, 3) )
+        self.env["uic"].add_event( EventClearInit(self.env, 4) )
+        self.env["uic"].add_event( EventIOEvent(self.env, 5) )
 
 class EventEndGame( BaseEvent ):
     def __init__( self , env , priority ):

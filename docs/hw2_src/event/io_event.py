@@ -24,5 +24,12 @@ class EventIOEvent( BaseEvent ):
             '''
             Check what key does player press then change the state of the game
             '''
+            if e.type != pygame.locals.KEYDOWN:
+                continue
+            if e.key in move_keys:
+                new_direction = move_keys[e.key]
+                if new_direction != self.env["dir"]:
+                    self.env["dir"] = new_direction
+
         self.env[ "uic" ].add_event( EventIOEvent( self.env , self.priority + TICKS_PER_TURN ) )
 

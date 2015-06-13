@@ -37,6 +37,16 @@ class EventDrawGround( BaseEvent ):
         '''
         What this event do is to arrange objects on the surface
         '''
+        snake_image = pygame.image.load("snake_part.png")
+        food_image = pygame.image.load("food.png")
+        snake_group.empty()
+        food_group.empty()
+
+        for x, y in self.env["snake"]:
+            snake_group.add(SnakePart([x, y], IMG_SNAKE_PART))
+
+        for x, y in self.env["foods"]:
+            food_group.add(SnakePart([x, y], IMG_FOOD))     
 
         self.env[ "uic" ].add_event( EventDrawGround( self.env , self.priority + TICKS_PER_TURN ) )
 
@@ -61,5 +71,8 @@ class EventDrawClear( BaseEvent ):
         '''
         What this event do is to draw objects on to the surface
         '''
+        self.env[ "screen" ].blit( IMG_BG , ( 0 , 0 ) )
+        snake_group.draw(self.env[ "screen" ])
+        food_group.draw(self.env[ "screen" ])
+        pygame.display.flip()
         self.env[ "uic" ].add_event( EventDrawClear( self.env , self.priority + TICKS_PER_TURN ) )
-
