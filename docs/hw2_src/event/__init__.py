@@ -18,6 +18,5 @@ for loader, name, is_pkg in pkgutil.walk_packages(__path__):
             continue
 
         globals()[name] = value
-        print( name )
         __all__.append(name)
 
