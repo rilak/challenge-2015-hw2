@@ -1,5 +1,6 @@
 import pygame
 from consts import *
+from event.game_event import EventEndGame
 from event.base_event import *
 from pygame.locals import *
 
