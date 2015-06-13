@@ -20,25 +20,21 @@ class EventCheckSnake( BaseEvent ):
         self.foods = self.env[ "foods" ]
 
     def check_is_dead( self ):
-        for ( i , ( px , py ) ) in enumerate( self.snake ):
-            if not ( 0 <= px <= 925 and 0 <= py <= 540 ):
-                print( "DEAD : out of boarder" )
+        (px, py) = self.snake[0]
+        if not ( 0 <= px <= 925 and 0 <= py <= 540 ):
+            print( "DEAD : out of boarder" )
+            return True
+        for (tx , ty) in self.snake[1:]:
+            if abs( px - tx ) < 2 and abs( py - ty ) < 2:
+                print( "DEAD : bump into self" )
                 return True
-            for ( j , ( tx , ty ) ) in enumerate( self.snake ):
-                if i == j:
-                    continue
-                if abs( px - tx ) < 2 and abs( py - ty ) < 2:
-                    print( "DEAD : bump into self" )
-                    print( str( ( px , py ) ) + " " + str( i ) )
-                    print( str( ( tx , ty ) ) + " " + str( j ) )
-                    return True
         return False
 
     def do_add_head( self ):
         ( dx , dy ) = self.env[ "dir" ]
         ( hx , hy ) = self.snake[ 0 ]
         for i in range( 1 , 11 ):
-            self.snake.insert( 0 , ( hx + i * dx * 2 , hy + i * dy * 2 ) )
+            self.snake.insert( 0 , ( hx + i * dx * MOVE_RATE , hy + i * dy * MOVE_RATE ) )
 
     def do_eat_foods( self ):
         ( dx , dy ) = self.env[ 'dir' ]
@@ -54,7 +50,7 @@ class EventCheckSnake( BaseEvent ):
     def do_move( self ):
         ( dx , dy ) = self.env[ "dir" ]
         ( hx , hy ) = self.snake[ 0 ]
-        self.snake.insert( 0 , ( hx + dx * 2 , hy + dy * 2 ) )
+        self.snake.insert( 0 , ( hx + dx * MOVE_RATE , hy + dy * MOVE_RATE ) )
         self.snake.pop()
 
     def do_action( self ):
@@ -78,18 +74,18 @@ class EventAddFood( BaseEvent ):
     def check_collision( self , p ):
         ( x , y ) = p
         for ( tx , ty ) in self.foods:
-            if abs( tx - x ) < 40 or abs( ty - y ) < 40:
-                return False
+            if abs( tx - x ) < 40 and abs( ty - y ) < 40:
+                return True
         for ( tx , ty ) in self.snake:
-            if abs( tx - x ) < 40 or abs( ty - y ) < 40:
-                return False
-        return True
+            if abs( tx - x ) < 40 and abs( ty - y ) < 40:
+                return True
+        return False
 
     def do_action( self ):
 
         if len( self.foods ) > 40:
             self.env[ "gamec" ].add_event( EventAddFood( self.env , self.priority + FOOD_ADD_TIME ) )
-
+            return
 
         p = ( random.randrange( 925 - 20 ) , random.randrange( 540 - 20 ) )
 
